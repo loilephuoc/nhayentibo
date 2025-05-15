@@ -136,34 +136,41 @@
 
         <!-- Chân trang -->
         <div align='center'>--------------------------------</div>
-        <div class="end">
-            <img id="qr_code" style="width: 195px; height: 195px" src="" alt="QR Code">
-        </div>
-	    <!-- Thêm khoảng trống để đẩy dòng cảm ơn xuống -->
-		<div style="height: 100px;"></div>
-        <div align='center'>--------------------------------</div>
-        <div class="end">
-            <table>
-                <tr>
-                    <td class="information">Thời gian:</td>
-                    <td class="information" style="text-align:left;" id="thoigiantao"></td>
-                </tr>
-                <tr>
-                    <td class="information">Mã đơn:</td>
-                    <td class="information" style="text-align:left;" id="id"></td>
-                </tr>
-                <tr>
-                    <td class="information">Quà tặng:</td>
-                    <td class="information"><h3 style="text-align:left;">💝💝💝 <span id="qua_tang"></span></h3></td>
-                </tr>
-                <tr>
-                    <td class="information">Ghi chú:</td>
-                    <td class="information" style="text-align:left;" id="ghichu"></td>
-                </tr>
-            </table>
-           <-- <div style="margin-top: 20px;" align='center'><b>-❣- Cảm ơn quý khách đã ủng hộ -❣-</b></div>  -->
-        </div>
+        <!-- Mã QR -->
+<div class="end">
+    <img id="qr_code" style="width: 195px; height: 195px" src="" alt="QR Code">
+</div>
+
+<!-- Thêm khoảng trống đẩy dòng cảm ơn xuống -->
+<div style="height: 100px;"></div>
+
+<!-- Thông tin đơn hàng -->
+<div align='center'>--------------------------------</div>
+<div class="end">
+    <table>
+        <tr>
+            <td class="information">Thời gian:</td>
+            <td class="information" style="text-align:left;" id="thoigiantao"></td>
+        </tr>
+        <tr>
+            <td class="information">Mã đơn:</td>
+            <td class="information" style="text-align:left;" id="id"></td>
+        </tr>
+        <tr>
+            <td class="information">Quà tặng:</td>
+            <td class="information"><h3 style="text-align:left;">💝💝💝 <span id="qua_tang"></span></h3></td>
+        </tr>
+        <tr>
+            <td class="information">Ghi chú:</td>
+            <td class="information" style="text-align:left;" id="ghichu"></td>
+        </tr>
+    </table>
+
+    <!-- Cảm ơn -->
+    <div style="margin-top: 30px;" align='center'>
+        <b>-❣- Cảm ơn quý khách đã ủng hộ -❣-</b>
     </div>
+</div>
 
     <script>
         // Lấy tham số từ URL
