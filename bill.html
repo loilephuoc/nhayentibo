@@ -61,23 +61,20 @@
             page-break-after: always;
         }
 
-
+        /* Ẩn 4 trường gây chồng text lên QR code */
+        #thoigiantao,
+        #id,
+        #qua_tang,
+        #ghichu {
+            display: none !important;
+        }
     </style>
-
-<style>
-  #thoigiantao,
-  #id,
-  #qua_tang,
-  #ghichu {
-    display: none !important;
-  }
-</style>
 </head>
 <body onload="window.print()">
     <div id="thermal-pos">
         <div class="label">
             <img style="width: 270px; height: 60px" src="images/Logo.png">
-			<img style="width: 270px; height: 8px" src="images/Blank.png">
+            <img style="width: 270px; height: 8px" src="images/Blank.png">
             <div>
                 <img style="width: 150px; height: 11px" src="images/Sđt.png">
                 <div style="text-align:left;"><span class="information">209 Bình Trường Bình Khánh Cần Giờ</span></div>
