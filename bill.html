@@ -1,154 +1,132 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <style>
     body {
       font-family: Arial, sans-serif;
-      font-size: 14px;
-      color: #000;
+      font-size: 13px;
+      line-height: 1.4;
       margin: 0;
-      padding: 10px;
-      width: 100%;
+      padding: 20px;
+      max-width: 350px;
     }
 
-    .container {
-      max-width: 400px;
-      margin: 0 auto;
-      page-break-inside: avoid;
-    }
-
-    h2, h3 {
+    .title {
       text-align: center;
-      margin: 5px 0;
-    }
-
-    hr {
-      border: none;
-      border-top: 1px dashed #aaa;
-      margin: 8px 0;
+      font-weight: bold;
+      margin-bottom: 10px;
     }
 
     .section {
-      margin-bottom: 8px;
-      page-break-inside: avoid;
+      margin-bottom: 15px;
     }
 
-    table {
+    .info, .customer, .totals, .footer {
+      border-top: 1px dashed #000;
+      padding-top: 10px;
+    }
+
+    .table {
       width: 100%;
       border-collapse: collapse;
     }
 
-    th, td {
-      padding: 3px 0;
+    .table th, .table td {
       text-align: left;
-      vertical-align: top;
+      padding: 3px 0;
     }
 
-    .right {
-      text-align: right;
-    }
-
-    .highlight {
+    .totals td {
       font-weight: bold;
-      color: #0066cc;
     }
 
-    .qr-img {
-      width: 120px;
-      display: block;
-      margin: 10px auto;
-    }
-
-    .footer {
+    .qr-wrapper {
       text-align: center;
-      font-size: 13px;
-      margin-top: 10px;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      clear: both;
     }
 
-    .gift {
-      color: red;
+    .note {
+      font-size: 12px;
+      margin-top: 5px;
+      text-align: center;
+    }
+
+    .bold {
       font-weight: bold;
+    }
+
+    .blue {
+      color: #0074D9;
+    }
+
+    img.qr {
+      max-width: 160px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
     }
   </style>
 </head>
 <body>
-  <div class="container">
 
-    <h2>HÓA ĐƠN BÁN HÀNG</h2>
-    <hr>
+  <div class="title">🧾 HÓA ĐƠN BÁN HÀNG 🧾</div>
 
-    <div class="section" style="text-align: center;">
-      <strong>Tên cửa hàng</strong><br>
-      <<[DiaChiCuaHang]>><br>
-      📞 <<[SoDienThoai]>>
-    </div>
-
-    <hr>
-
-    <div class="section">
-      <strong>Khách hàng:</strong> <<[TenKH]>><br>
-      <strong>SĐT:</strong> <<[SDT]>><br>
-      <strong>Địa chỉ:</strong> <<[DiaChi]>>
-    </div>
-
-    <hr>
-
-    <div class="section">
-      <table>
-        <tr>
-          <th>Sản phẩm</th>
-          <th class="right">SL x ĐG</th>
-          <th class="right">Thành tiền</th>
-        </tr>
-        <<[ChiTietSanPham]>>
-      </table>
-    </div>
-
-    <hr>
-
-    <div class="section">
-      <table>
-        <tr>
-          <td><strong>Tổng cộng:</strong></td>
-          <td class="right"><<[TongCong]>></td>
-        </tr>
-        <tr>
-          <td><strong>Phí vận chuyển:</strong></td>
-          <td class="right"><<[PhiShip]>></td>
-        </tr>
-        <tr>
-          <td><strong>Khuyến mãi:</strong></td>
-          <td class="right"><<[KhuyenMai]>></td>
-        </tr>
-        <tr>
-          <td><strong class="highlight">Thanh toán:</strong></td>
-          <td class="right highlight"><<[ThanhToan]>></td>
-        </tr>
-      </table>
-    </div>
-
-    <hr>
-
-    <div class="section" style="text-align: center;">
-      <strong>Hình thức:</strong> Chuyển khoản<br>
-      Hoặc quét mã để thanh toán ⤵️<br>
-      <img src="<<[QRThanhToan]>>" class="qr-img" alt="QR Code">
-    </div>
-
-    <hr>
-
-    <div class="section">
-      <strong>Thời gian:</strong> <<[ThoiGian]>><br>
-      <strong>Mã đơn:</strong> <<[MaDon]>><br>
-      <strong>Quà tặng:</strong> <span class="gift"><<[QuaTang]>></span><br>
-      <strong>Ghi chú:</strong> <<[GhiChu]>>
-    </div>
-
-    <div class="footer">
-      -🙏 Cảm ơn quý khách đã ủng hộ 🙏-
-    </div>
-
+  <div class="section info">
+    <div><span class="bold">🏪 {{Tên cửa hàng}}</span></div>
+    <div>{{Địa chỉ}}</div>
+    <div>📞 {{Số điện thoại}}</div>
   </div>
+
+  <div class="section customer">
+    <div><span class="bold">👤 Tên KH:</span> {{Tên khách}}</div>
+    <div><span class="bold">📱 SĐT:</span> {{Số điện thoại KH}}</div>
+    <div><span class="bold">📍 Địa chỉ:</span> {{Địa chỉ KH}}</div>
+  </div>
+
+  <div class="section">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>S.phẩm</th>
+          <th>Slg x Đ.giá</th>
+          <th style="text-align:right">Thành tiền</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{Danh sách sản phẩm}}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section totals">
+    <table class="table">
+      <tr><td>Tổng cộng:</td><td style="text-align:right">{{Tổng cộng}}</td></tr>
+      <tr><td>Phí vận chuyển:</td><td style="text-align:right">{{Phí vận chuyển}}</td></tr>
+      <tr><td>Khuyến mãi:</td><td style="text-align:right">{{Khuyến mãi}}</td></tr>
+      <tr><td>Thanh toán:</td><td style="text-align:right" class="blue">{{Thanh toán}}</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div><span class="bold">Hình thức:</span> Chuyển khoản</div>
+    <div>Hoặc quét mã để thanh toán ^_^</div>
+  </div>
+
+  <div class="qr-wrapper">
+    <img class="qr" src="{{Link mã QR}}" alt="QR Code" />
+  </div>
+
+  <div class="section">
+    <div><span class="bold">🕒 Thời gian:</span> {{Thời gian}}</div>
+    <div><span class="bold">🧾 Mã đơn:</span> {{Mã đơn}}</div>
+    <div><span class="bold">🎁 Quà tặng:</span> {{Quà tặng}}</div>
+    <div><span class="bold">📝 Ghi chú:</span> {{Ghi chú}}</div>
+  </div>
+
+  <div class="footer note">-*- Cảm ơn quý khách đã ủng hộ -*-</div>
+
 </body>
 </html>
