@@ -1,243 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-    <title>Hóa Đơn</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style type="text/css">
-        #thermal-pos {
-            box-shadow: 0 0 5px #EEE;
-            margin: 0 auto;
-            max-width: 72mm;
-            line-height: 6mm;
-            font-family: Arial, sans-serif;
+    <meta charset="UTF-8">
+    <title>Hóa đơn</title>
+    <style>
+        body {
+            font-family: "Courier New", monospace;
+            font-size: 14px;
         }
-        #thermal-pos h2 {
-            font-size: 4mm;
-            line-height: 13px;
-        }
-        #thermal-pos h4 {
-            font-size: 4.5mm;
-            line-height: 13px;
-        }
-        #thermal-pos h3 {
-            font-size: 4.3mm;
-            color: #DD0000;
-        }
-        #thermal-pos .label {
+        .center {
             text-align: center;
-            font-size: 4mm;
         }
-        #thermal-pos .information {
-            vertical-align: text-top;
-            max-width: 45mm;
-            word-wrap: break-word;
+        .bold {
+            font-weight: bold;
         }
-        #thermal-pos .listitem {
-            font-size: 4mm;
-            height: 5mm;
+        .information {
+            padding: 2px 4px;
         }
-        #thermal-pos table {
+        .end {
+            text-align: center;
+            margin-top: 15px;
+        }
+        table {
             width: 100%;
-            border-collapse: collapse;
         }
-        #thermal-pos .item {
-            max-width: 80mm;
-            font-size: 4.2mm;
-            word-wrap: break-word;
-        }
-        #thermal-pos .total {
-            margin-top: 5mm;
-            vertical-align: bottom;
-            text-align: right;
-            font-size: 4.2mm;
-        }
-        #thermal-pos .qty {
-            text-align: right;
-        }
-        #thermal-pos .end {
-            margin-top: 0mm;
-            text-align: center;
-            height: 40px;
-            page-break-after: always;
+        td {
+            vertical-align: top;
         }
     </style>
 </head>
-<body onload="window.print()">
-    <div id="thermal-pos">
-        <div class="label">
-            <img style="width: 270px; height: 60px" src="./images/Logo.png" alt="Logo">
-            <img style="width: 270px; height: 8px" src="./images/Blank.png" alt="">
-            <div>
-               <img style="width: 150px; height: 11px" src="./images/Sđt.png" alt="Số điện thoại">
-                <div style="text-align:left;"><span class="information">209 Bình Trường Bình Khánh Cần Giờ</span></div>
-            </div>
-            <img style="width: 55px; height: 55px" src="./images/moctron.png" alt="Móc tròn">
-        </div>
-
-        <div align='center'><b>THÔNG TIN KHÁCH HÀNG</b></div>
-        <table>
-            <tr>
-                <td class="information">Tên KH:</td>
-                <td class="information" style="text-align:left;" id="hoten_kh"></td>
-            </tr>
-            <tr>
-                <td class="information">Sđt:</td>
-                <td class="information" style="text-align:left;" id="zalo"></td>
-            </tr>
-            <tr>
-                <td class="information">Địa chỉ:</td>
-                <td class="information" style="text-align:left;" id="dia_chi"></td>
-            </tr>
-        </table>
-
-        <div align='center'>--------------------------------</div>
-        
-        <!-- Danh sách sản phẩm -->
-        <table>
-            <tbody>
-                <tr class="listitem">
-                    <td><h2>S.phẩm &nbsp;&nbsp;&nbsp;Slg x Đ.giá</h2></td>
-                    <td><h2 style="text-align:right;">Thành tiền</h2></td>
-                </tr>
-                <!-- Sản phẩm sẽ được thêm bằng JS -->
-                <tbody id="product-list"></tbody>
-            </tbody>
-        </table>
-
-        <div align='right'>-----------------------------</div>
-        
-        <!-- Tổng tiền -->
-        <table>
-            <tr class="listitem">
-                <td class="total">
-                    <h2>Tổng cộng: </h2>
-                    <h2>Phí vận chuyển: </h2>
-                    <h2>Khuyến mãi: </h2>
-                    <h4 style="color: #0033FF;">Thanh toán: </h4>
-                </td>
-                <td class="total">
-                    <h2 id="tong_thanh_tien"></h2>
-                    <h2 id="phi_van_chuyen"></h2>
-                    <h2 id="khuyen_mai"></h2>
-                    <h4 style="color: #0033FF;" id="thanh_tien_sau_chiet_khau_1"></h4>
-                </td>
-            </tr>
-        </table>
-
-        <div align='left'>
-            <table>
-                <tr>
-                    <td class="information">Hình thức:</td>
-                    <td class="information" id="hinhthuc_thanhtoan"></td>
-                </tr>
-            </table>
-            <div>Hoặc quét mã để thanh toán ⁀➷</div>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-        
-        <!-- Chân trang -->
-<div align='center'>--------------------------------</div>
-<div class="end" style="margin-bottom: 15px;">
-    <img id="qr_code" style="width: 195px; height: 195px" src="" alt="QR Code">
-</div>
-
-<!-- Tách riêng phần thông tin để tránh đè QR -->
-<div style="text-align:center; margin-top: 10px;">
+<body>
+    <div class="center bold">🧾 HÓA ĐƠN BÁN HÀNG 🧾</div>
     <div align='center'>--------------------------------</div>
-    <table style="margin: 0 auto;">
-        <tr>
-            <td class="information">Thời gian:</td>
-            <td class="information" style="text-align:left;" id="thoigiantao"></td>
-        </tr>
-        <tr>
-            <td class="information">Mã đơn:</td>
-            <td class="information" style="text-align:left;" id="id"></td>
-        </tr>
-        <tr>
-            <td class="information">Quà tặng:</td>
-            <td class="information"><h3 style="text-align:left;">💝💝💝 <span id="qua_tang"></span></h3></td>
-        </tr>
-        <tr>
-            <td class="information">Ghi chú:</td>
-            <td class="information" style="text-align:left;" id="ghichu"></td>
-        </tr>
-    </table>
-    <div align='center'><b>-❣- Cảm ơn quý khách đã ủng hộ -❣-</b></div>
-</div>
 
-
-
-
-
-
-
-
-
-
-
-
-        
+    <!-- Thông tin cửa hàng -->
+    <div class="center">
+        <div id="ten_cua_hang" class="bold">Tên cửa hàng</div>
+        <div id="dia_chi">Địa chỉ</div>
+        <div>📞 <span id="so_dien_thoai">Số điện thoại</span></div>
     </div>
 
-    <script>
-        // Lấy tham số từ URL
-        const urlParams = new URLSearchParams(window.location.search);
-        
-        // Điền thông tin cơ bản
-        document.getElementById("hoten_kh").textContent = urlParams.get("hoten_kh") || "N/A";
-        document.getElementById("zalo").textContent = urlParams.get("zalo") || "N/A";
-        document.getElementById("dia_chi").textContent = urlParams.get("dia_chi") || "N/A";
-        document.getElementById("tong_thanh_tien").textContent = urlParams.get("tong_thanh_tien") || "0";
-        document.getElementById("phi_van_chuyen").textContent = urlParams.get("phi_van_chuyen") || "0";
-        document.getElementById("khuyen_mai").textContent = urlParams.get("khuyen_mai") || "0";
-        document.getElementById("thanh_tien_sau_chiet_khau_1").textContent = urlParams.get("thanh_tien_sau_chiet_khau_1") || "0";
-        document.getElementById("hinhthuc_thanhtoan").textContent = urlParams.get("hinhthuc_thanhtoan") || "Tiền mặt";
-        document.getElementById("thoigiantao").textContent = urlParams.get("thoigiantao") || "N/A";
-        document.getElementById("id").textContent = urlParams.get("id") || "N/A";
-        document.getElementById("qua_tang").textContent = urlParams.get("qua_tang") || "";
-        document.getElementById("ghichu").textContent = urlParams.get("ghichu") || "N/A";
+    <div align='center'>--------------------------------</div>
 
-        // Tạo QR code động
-        const qrAmount = urlParams.get("thanh_tien_sau_chiet_khau") || "0";
-        document.getElementById("qr_code").src = `https://img.vietqr.io/image/970436-9774792793-compact.png?accountName=NGUYEN%20THI%20KIM%20HUE&amount=${qrAmount}`;
+    <!-- Danh sách sản phẩm -->
+    <table id="bang_san_pham">
+        <!-- Hàng sẽ được chèn bằng script -->
+    </table>
 
-        // Xử lý danh sách sản phẩm
-        const productList = document.getElementById("product-list");
-        const tensp = urlParams.get("ten_sp")?.split(",") || [];
-        const dongia = urlParams.get("don_gia")?.split(",") || [];
-        const soluong = urlParams.get("so_luong")?.split(",") || [];
-        const thanhtien = urlParams.get("thanh_tien")?.split(",") || [];
+    <div align='center'>--------------------------------</div>
 
-        tensp.forEach((item, index) => {
-            if (!item) return;
-            
-            const row1 = document.createElement("tr");
-            row1.className = "listitem";
-            row1.innerHTML = `
-                <td class="item" colspan="2">${item}</td>
-            `;
-            
-            const row2 = document.createElement("tr");
-            row2.className = "listitem";
-            row2.innerHTML = `
-                <td><div class="qty">${soluong[index] || 0} x ${dongia[index] || 0}</div></td>
-                <td class="total">${thanhtien[index] || 0}</td>
-            `;
-            
-            productList.appendChild(row1);
-            productList.appendChild(row2);
-        });
-    </script>
+    <!-- Tổng tiền -->
+    <table>
+        <tr>
+            <td class="information bold">Tổng cộng:</td>
+            <td class="information" style="text-align:right;" id="tong_tien"></td>
+        </tr>
+        <tr>
+            <td class="information bold">Thanh toán:</td>
+            <td class="information" style="text-align:right;" id="thanh_toan"></td>
+        </tr>
+        <tr>
+            <td class="information bold">Tiền thừa:</td>
+            <td class="information" style="text-align:right;" id="tien_thua"></td>
+        </tr>
+    </table>
+
+    <div align='center'>--------------------------------</div>
+
+    <!-- QR code -->
+    <div class="end" style="margin-bottom: 15px;">
+        <img id="qr_code" style="width: 195px; height: 195px" src="" alt="QR Code">
+    </div>
+
+    <!-- Thông tin thêm -->
+    <div style="text-align:center; margin-top: 10px;">
+        <div align='center'>--------------------------------</div>
+        <table style="margin: 0 auto;">
+            <tr>
+                <td class="information">Thời gian:</td>
+                <td class="information" style="text-align:left;" id="thoigiantao"></td>
+            </tr>
+            <tr>
+                <td class="information">Mã đơn:</td>
+                <td class="information" style="text-align:left;" id="id"></td>
+            </tr>
+            <tr>
+                <td class="information">Quà tặng:</td>
+                <td class="information">
+                    <h3 style="text-align:left;">💝💝💝 <span id="qua_tang"></span></h3>
+                </td>
+            </tr>
+            <tr>
+                <td class="information">Ghi chú:</td>
+                <td class="information" style="text-align:left;" id="ghichu"></td>
+            </tr>
+        </table>
+        <div align='center'><b>-❣- Cảm ơn quý khách đã ủng hộ -❣-</b></div>
+    </div>
 </body>
 </html>
