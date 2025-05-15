@@ -6,9 +6,16 @@
     body {
       font-family: Arial, sans-serif;
       font-size: 14px;
-      width: 350px;
-      margin: 0 auto;
       color: #000;
+      margin: 0;
+      padding: 10px;
+      width: 100%;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      page-break-inside: avoid;
     }
 
     h2, h3 {
@@ -22,19 +29,9 @@
       margin: 8px 0;
     }
 
-    .no-break {
-      page-break-inside: avoid;
-      break-inside: avoid;
-    }
-
-    @media print {
-      .no-break {
-        page-break-inside: avoid;
-      }
-    }
-
-    .info, .section {
+    .section {
       margin-bottom: 8px;
+      page-break-inside: avoid;
     }
 
     table {
@@ -42,9 +39,9 @@
       border-collapse: collapse;
     }
 
-    table th, table td {
+    th, td {
+      padding: 3px 0;
       text-align: left;
-      padding: 4px 0;
       vertical-align: top;
     }
 
@@ -53,23 +50,19 @@
     }
 
     .highlight {
-      color: blue;
       font-weight: bold;
-    }
-
-    .center {
-      text-align: center;
+      color: #0066cc;
     }
 
     .qr-img {
-      width: 150px;
+      width: 120px;
       display: block;
       margin: 10px auto;
     }
 
-    .footer-note {
-      font-size: 13px;
+    .footer {
       text-align: center;
+      font-size: 13px;
       margin-top: 10px;
     }
 
@@ -80,76 +73,82 @@
   </style>
 </head>
 <body>
+  <div class="container">
 
-  <div class="no-break center">
-    <h2>NHÀ YẾN TIBO</h2>
-    <p>📞 <strong><<[SoDienThoai]>></strong></p>
-    <p><<[DiaChiCuaHang]>></p>
+    <h2>HÓA ĐƠN BÁN HÀNG</h2>
+    <hr>
+
+    <div class="section" style="text-align: center;">
+      <strong>Tên cửa hàng</strong><br>
+      <<[DiaChiCuaHang]>><br>
+      📞 <<[SoDienThoai]>>
+    </div>
+
+    <hr>
+
+    <div class="section">
+      <strong>Khách hàng:</strong> <<[TenKH]>><br>
+      <strong>SĐT:</strong> <<[SDT]>><br>
+      <strong>Địa chỉ:</strong> <<[DiaChi]>>
+    </div>
+
+    <hr>
+
+    <div class="section">
+      <table>
+        <tr>
+          <th>Sản phẩm</th>
+          <th class="right">SL x ĐG</th>
+          <th class="right">Thành tiền</th>
+        </tr>
+        <<[ChiTietSanPham]>>
+      </table>
+    </div>
+
+    <hr>
+
+    <div class="section">
+      <table>
+        <tr>
+          <td><strong>Tổng cộng:</strong></td>
+          <td class="right"><<[TongCong]>></td>
+        </tr>
+        <tr>
+          <td><strong>Phí vận chuyển:</strong></td>
+          <td class="right"><<[PhiShip]>></td>
+        </tr>
+        <tr>
+          <td><strong>Khuyến mãi:</strong></td>
+          <td class="right"><<[KhuyenMai]>></td>
+        </tr>
+        <tr>
+          <td><strong class="highlight">Thanh toán:</strong></td>
+          <td class="right highlight"><<[ThanhToan]>></td>
+        </tr>
+      </table>
+    </div>
+
+    <hr>
+
+    <div class="section" style="text-align: center;">
+      <strong>Hình thức:</strong> Chuyển khoản<br>
+      Hoặc quét mã để thanh toán ⤵️<br>
+      <img src="<<[QRThanhToan]>>" class="qr-img" alt="QR Code">
+    </div>
+
+    <hr>
+
+    <div class="section">
+      <strong>Thời gian:</strong> <<[ThoiGian]>><br>
+      <strong>Mã đơn:</strong> <<[MaDon]>><br>
+      <strong>Quà tặng:</strong> <span class="gift"><<[QuaTang]>></span><br>
+      <strong>Ghi chú:</strong> <<[GhiChu]>>
+    </div>
+
+    <div class="footer">
+      -🙏 Cảm ơn quý khách đã ủng hộ 🙏-
+    </div>
+
   </div>
-
-  <hr>
-
-  <div class="no-break">
-    <h3 class="center">THÔNG TIN KHÁCH HÀNG</h3>
-    <p><strong>Tên KH:</strong> <<[TenKH]>></p>
-    <p><strong>SĐT:</strong> <<[SDT]>></p>
-    <p><strong>Địa chỉ:</strong> <<[DiaChi]>></p>
-  </div>
-
-  <hr>
-
-  <div class="no-break">
-    <table>
-      <tr>
-        <th>S.phẩm</th>
-        <th class="right">Slg x Đ.giá</th>
-        <th class="right">Thành tiền</th>
-      </tr>
-      <<[ChiTietSanPham]>>
-    </table>
-  </div>
-
-  <hr>
-
-  <div class="no-break">
-    <table>
-      <tr>
-        <td><strong>Tổng cộng:</strong></td>
-        <td class="right"><<[TongCong]>></td>
-      </tr>
-      <tr>
-        <td><strong>Phí vận chuyển:</strong></td>
-        <td class="right"><<[PhiShip]>></td>
-      </tr>
-      <tr>
-        <td><strong>Khuyến mãi:</strong></td>
-        <td class="right"><<[KhuyenMai]>></td>
-      </tr>
-      <tr>
-        <td><strong class="highlight">Thanh toán:</strong></td>
-        <td class="right highlight"><<[ThanhToan]>></td>
-      </tr>
-    </table>
-  </div>
-
-  <hr>
-
-  <div class="no-break">
-    <p><strong>Hình thức:</strong> Chuyển khoản</p>
-    <p>Hoặc quét mã để thanh toán ⤵️</p>
-    <img src="<<[QRThanhToan]>>" class="qr-img">
-  </div>
-
-  <hr>
-
-  <div class="no-break">
-    <p><strong>Thời gian:</strong> <<[ThoiGian]>></p>
-    <p><strong>Mã đơn:</strong> <<[MaDon]>> </p>
-    <p><strong>Quà tặng:</strong> <span class="gift"><<[QuaTang]>></span></p>
-    <p><strong>Ghi chú:</strong> <<[GhiChu]>></p>
-  </div>
-
-  <p class="footer-note">-🙏 Cảm ơn quý khách đã ủng hộ 🙏-</p>
-
 </body>
 </html>
