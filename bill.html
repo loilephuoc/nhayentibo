@@ -60,23 +60,13 @@
             height: 40px;
             page-break-after: always;
         }
-
-        /* Ẩn 4 trường gây chồng text lên QR code */
-            tr:has(#thoigiantao),
-            tr:has(#id),
-            tr:has(#qua_tang),
-            tr:has(#ghichu) {
-              display: none !important;
-            }
-
-      
     </style>
 </head>
 <body onload="window.print()">
     <div id="thermal-pos">
         <div class="label">
             <img style="width: 270px; height: 60px" src="images/Logo.png">
-            <img style="width: 270px; height: 8px" src="images/Blank.png">
+			<img style="width: 270px; height: 8px" src="images/Blank.png">
             <div>
                 <img style="width: 150px; height: 11px" src="images/Sđt.png">
                 <div style="text-align:left;"><span class="information">209 Bình Trường Bình Khánh Cần Giờ</span></div>
@@ -191,6 +181,15 @@
         document.getElementById("qua_tang").textContent = urlParams.get("qua_tang") || "";
         document.getElementById("ghichu").textContent = urlParams.get("ghichu") || "N/A";
 
+        // Ẩn các dòng chứa các trường thông tin không cần hiển thị
+        ["thoigiantao", "id", "qua_tang", "ghichu"].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                const row = el.closest("tr");
+                if (row) row.style.display = "none";
+            }
+        });
+
         // Tạo QR code động
         const qrAmount = urlParams.get("thanh_tien_sau_chiet_khau") || "0";
         document.getElementById("qr_code").src = `https://img.vietqr.io/image/970436-9774792793-compact.png?accountName=NGUYEN%20THI%20KIM%20HUE&amount=${qrAmount}`;
@@ -207,9 +206,7 @@
             
             const row1 = document.createElement("tr");
             row1.className = "listitem";
-            row1.innerHTML = `
-                <td class="item" colspan="2">${item}</td>
-            `;
+            row1.innerHTML = `<td class="item" colspan="2">${item}</td>`;
             
             const row2 = document.createElement("tr");
             row2.className = "listitem";
