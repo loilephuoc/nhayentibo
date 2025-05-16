@@ -224,6 +224,263 @@
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
 window.onload = () => {
+    const original = document.getElementById("thermal-pos");
+    const target = document.getElementById("thermal-pos");
+
+    
+    setTimeout(() => {
+        html2canvas(original, {
+            scale: 2,
+            useCORS: true
+        }).then(canvas => {
+            const imgData = canvas.toDataURL("image/png");
+            window.generatedImageData = imgData;
+
+            // Ẩn phần hóa đơn gốc
+            original.style.display = "none";
+
+            // Tạo khung chứa ảnh và nút tải
+            const resultContainer = document.createElement("div");
+            resultContainer.style.textAlign = "center";
+            resultContainer.style.margin = "20px";
+
+            resultContainer.innerHTML = `
+                <p style="margin: 10px; font-size: 16px;">✦ Hóa đơn đã tạo xong. Bạn có thể lưu ảnh về máy:</p>
+                <img src="${imgData}" style="width:100%; max-width:600px; border:1px solid #ccc;"/>
+                <br><br>
+                <button onclick="downloadImage()" style="padding: 10px 20px; font-size: 16px;">📥 Tải ảnh về máy</button>
+            `;
+
+            // Chèn lên đầu body
+            document.body.insertBefore(resultContainer, document.body.firstChild);
+
+            // Tự động tải ảnh (nếu được)
+            downloadImage();
+        });
+    }, 1000);
+Đơn</title>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<style type="text/css">
+      html, body {
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+        #thermal-pos {
+            padding-bottom: 100px;
+            box-shadow: 0 0 5px #EEE;
+            margin: 0 auto;
+            max-width: 72mm;
+            line-height: 6mm;
+            font-family: Arial, sans-serif;
+            height: auto !important;
+            overflow: visible !important;
+        }
+        #thermal-pos h2 {
+            font-size: 4mm;
+            line-height: 13px;
+        }
+        #thermal-pos h4 {
+            font-size: 4.5mm;
+            line-height: 13px;
+        }
+        #thermal-pos h3 {
+            font-size: 4.3mm;
+            color: #DD0000;
+        }
+        #thermal-pos .label {
+            text-align: center;
+            font-size: 4mm;
+        }
+        #thermal-pos .information {
+            vertical-align: text-top;
+            max-width: 45mm;
+            word-wrap: break-word;
+        }
+        #thermal-pos .listitem {
+            font-size: 4mm;
+            height: 5mm;
+        }
+        #thermal-pos table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #thermal-pos .item {
+            max-width: 80mm;
+            font-size: 4.2mm;
+            word-wrap: break-word;
+        }
+        #thermal-pos .total {
+            margin-top: 5mm;
+            vertical-align: bottom;
+            text-align: right;
+            font-size: 4.2mm;
+        }
+        #thermal-pos .qty {
+            text-align: right;
+        }
+        #thermal-pos .end {
+            margin-top: 0mm;
+            text-align: center;
+            height: 40px;
+            page-break-after: always;
+        }
+    </style>
+</head>
+<body>
+<div id="thermal-pos">
+<div class="label">
+<img src="images/Logo.png" style="width: 270px; height: 60px"/>
+<img src="images/Blank.png" style="width: 270px; height: 8px"/>
+<div>
+<img src="images/Sđt.png" style="width: 150px; height: 11px"/>
+<div style="text-align:left;"><span class="information">209 Bình Trường Bình Khánh Cần Giờ</span></div>
+</div>
+<img src="images/moctron.png" style="width: 55px; height: 55px"/>
+</div>
+<div align="center"><b>THÔNG TIN KHÁCH HÀNG</b></div>
+<table>
+<tr>
+<td class="information">Tên KH:</td>
+<td class="information" id="hoten_kh" style="text-align:left;"></td>
+</tr>
+<tr>
+<td class="information">Sđt:</td>
+<td class="information" id="zalo" style="text-align:left;"></td>
+</tr>
+<tr>
+<td class="information">Địa chỉ:</td>
+<td class="information" id="dia_chi" style="text-align:left;"></td>
+</tr>
+</table>
+<div align="center">--------------------------------</div>
+<!-- Danh sách sản phẩm -->
+<table>
+<tbody>
+<tr class="listitem">
+<td><h2>S.phẩm    Slg x Đ.giá</h2></td>
+<td><h2 style="text-align:right;">Thành tiền</h2></td>
+</tr>
+<!-- Sản phẩm sẽ được thêm bằng JS -->
+<tbody id="product-list"></tbody>
+</tbody>
+</table>
+<div align="right">-----------------------------</div>
+<!-- Tổng tiền -->
+<table>
+<tr class="listitem">
+<td class="total">
+<h2>Tổng cộng: </h2>
+<h2>Phí vận chuyển: </h2>
+<h2>Khuyến mãi: </h2>
+<h4 style="color: #0033FF;">Thanh toán: </h4>
+</td>
+<td class="total">
+<h2 id="tong_thanh_tien"></h2>
+<h2 id="phi_van_chuyen"></h2>
+<h2 id="khuyen_mai"></h2>
+<h4 id="thanh_tien_sau_chiet_khau_1" style="color: #0033FF;"></h4>
+</td>
+</tr>
+</table>
+<div align="left">
+<table>
+<tr>
+<td class="information">Hình thức:</td>
+<td class="information" id="hinhthuc_thanhtoan"></td>
+</tr>
+</table>
+<div>Hoặc quét mã để thanh toán ⁀➷</div>
+</div>
+<!-- Chân trang -->
+<div align="center">--------------------------------</div>
+<!-- Mã QR -->
+<div class="end">
+<img alt="QR Code" id="qr_code" src="" style="width: 195px; height: 195px"/>
+</div>
+<!-- Thêm khoảng trống đẩy dòng cảm ơn xuống -->
+<div style="height: 150px;"></div>
+<!-- Thông tin đơn hàng -->
+<div align="center">--------------------------------</div>
+<div class="end">
+<table>
+<tr>
+<td class="information">Thời gian:</td>
+<td class="information" id="thoigiantao" style="text-align:left;"></td>
+</tr>
+<tr>
+<td class="information">Mã đơn:</td>
+<td class="information" id="id" style="text-align:left;"></td>
+</tr>
+<tr>
+<td class="information">Quà tặng:</td>
+<td class="information"><h3 style="text-align:left;">💝💝💝 <span id="qua_tang"></span></h3></td>
+</tr>
+<tr>
+<td class="information">Ghi chú:</td>
+<td class="information" id="ghichu" style="text-align:left;"></td>
+</tr>
+</table>
+<!-- Cảm ơn -->
+<div align="center" style="margin-top: 10px;">
+<b>-❣- Cảm ơn quý khách đã ủng hộ -❣-</b>
+</div>
+</div>
+<script>
+        // Lấy tham số từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Điền thông tin cơ bản
+        document.getElementById("hoten_kh").textContent = urlParams.get("hoten_kh") || "N/A";
+        document.getElementById("zalo").textContent = urlParams.get("zalo") || "N/A";
+        document.getElementById("dia_chi").textContent = urlParams.get("dia_chi") || "N/A";
+        document.getElementById("tong_thanh_tien").textContent = urlParams.get("tong_thanh_tien") || "0";
+        document.getElementById("phi_van_chuyen").textContent = urlParams.get("phi_van_chuyen") || "0";
+        document.getElementById("khuyen_mai").textContent = urlParams.get("khuyen_mai") || "0";
+        document.getElementById("thanh_tien_sau_chiet_khau_1").textContent = urlParams.get("thanh_tien_sau_chiet_khau_1") || "0";
+        document.getElementById("hinhthuc_thanhtoan").textContent = urlParams.get("hinhthuc_thanhtoan") || "Tiền mặt";
+        document.getElementById("thoigiantao").textContent = urlParams.get("thoigiantao") || "N/A";
+        document.getElementById("id").textContent = urlParams.get("id") || "N/A";
+        document.getElementById("qua_tang").textContent = urlParams.get("qua_tang") || "";
+        document.getElementById("ghichu").textContent = urlParams.get("ghichu") || "N/A";
+
+    
+
+        // Tạo QR code động
+        const qrAmount = urlParams.get("thanh_tien_sau_chiet_khau") || "0";
+        document.getElementById("qr_code").src = `https://img.vietqr.io/image/970436-9774792793-compact.png?accountName=NGUYEN%20THI%20KIM%20HUE&amount=${qrAmount}`;
+
+        // Xử lý danh sách sản phẩm
+        const productList = document.getElementById("product-list");
+        const tensp = urlParams.get("ten_sp")?.split(",") || [];
+        const dongia = urlParams.get("don_gia")?.split(",") || [];
+        const soluong = urlParams.get("so_luong")?.split(",") || [];
+        const thanhtien = urlParams.get("thanh_tien")?.split(",") || [];
+
+        tensp.forEach((item, index) => {
+            if (!item) return;
+            
+            const row1 = document.createElement("tr");
+            row1.className = "listitem";
+            row1.innerHTML = `<td class="item" colspan="2">${item}</td>`;
+            
+            const row2 = document.createElement("tr");
+            row2.className = "listitem";
+            row2.innerHTML = `
+                <td><div class="qty">${soluong[index] || 0} x ${dongia[index] || 0}</div></td>
+                <td class="total">${thanhtien[index] || 0}</td>
+            `;
+            
+            productList.appendChild(row1);
+            productList.appendChild(row2);
+        });
+    </script>
+</div>
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script>
+window.onload = () => {
+    const original = document.getElementById("thermal-pos");
     const target = document.getElementById("thermal-pos");
 
     setTimeout(() => {
