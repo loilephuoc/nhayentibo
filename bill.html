@@ -138,6 +138,7 @@
         <div align='center'>--------------------------------</div>
         <!-- Mã QR -->
 <div class="end">
+	
     <img id="qr_code" style="width: 195px; height: 195px" src="" alt="QR Code">
 </div>
 
@@ -190,14 +191,7 @@
         document.getElementById("qua_tang").textContent = urlParams.get("qua_tang") || "";
         document.getElementById("ghichu").textContent = urlParams.get("ghichu") || "N/A";
 
-        // Ẩn các dòng chứa các trường thông tin không cần hiển thị
-        ["thoigiantao", "id", "qua_tang", "ghichu"].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) {
-                const row = el.closest("tr");
-                if (row) row.style.display = "none";
-            }
-        });
+    
 
         // Tạo QR code động
         const qrAmount = urlParams.get("thanh_tien_sau_chiet_khau") || "0";
