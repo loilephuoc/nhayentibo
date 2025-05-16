@@ -219,6 +219,7 @@
         });
     </script>
 </div>
+
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
 window.onload = () => {
@@ -232,18 +233,15 @@ window.onload = () => {
             const imgData = canvas.toDataURL("image/png");
             window.generatedImageData = imgData;
 
-            // Hiển thị ảnh và nút tải/in
             const resultContainer = document.createElement("div");
             resultContainer.style.textAlign = "center";
-            resultContainer.style.marginTop = "20px";
+            resultContainer.style.marginTop = "30px";
 
             resultContainer.innerHTML = `
-                <p style="margin: 10px; font-size: 16px;">✦ Hóa đơn đã tạo xong. Bạn có thể lưu hoặc in:</p>
+                <p style="margin: 10px; font-size: 16px;">✦ Hóa đơn đã tạo xong. Bạn có thể lưu ảnh về máy:</p>
                 <img src="${imgData}" style="width:100%; max-width:600px; border:1px solid #ccc;"/>
                 <br><br>
                 <button onclick="downloadImage()" style="padding: 10px 20px; font-size: 16px;">📥 Tải ảnh về máy</button>
-                <button onclick="window.print()" style="padding: 10px 20px; font-size: 16px; margin-left: 10px;">🖨️ In hóa đơn</button>
-                <p style="color: gray; font-size: 14px;">Bạn có thể giữ ảnh hoặc in trực tiếp</p>
             `;
 
             document.body.appendChild(resultContainer);
@@ -258,6 +256,7 @@ function downloadImage() {
     link.click();
 }
 </script>
+
 
 </body>
 </html>
