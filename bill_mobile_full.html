@@ -230,33 +230,56 @@ window.onload = () => {
     
     setTimeout(() => {
         html2canvas(original, {
-            scale: 2,
-            useCORS: true
-        }).then(canvas => {
-            const imgData = canvas.toDataURL("image/png");
-            window.generatedImageData = imgData;
+    scale: 2,
+    useCORS: true
+}).then(canvas => {
+    const imgData = canvas.toDataURL("image/png");
+    window.generatedImageData = imgData;
 
-            // Ẩn phần hóa đơn gốc
-            original.style.display = "none";
+    // Ẩn phần hóa đơn gốc
+    original.style.display = "none";
 
-            // Tạo khung chứa ảnh và nút tải
-            const resultContainer = document.createElement("div");
-            resultContainer.style.textAlign = "center";
-            resultContainer.style.margin = "20px";
+    // Tạo khung hiển thị ảnh
+    const imageContainer = document.createElement("div");
+    imageContainer.style.textAlign = "center";
+    imageContainer.style.marginTop = "80px"; // chừa chỗ cho nút cố định phía trên
+    imageContainer.innerHTML = `
+        <p style="margin: 10px; font-size: 16px;">✦ Hóa đơn đã tạo xong. Bạn có thể lưu ảnh về máy:</p>
+        <img src="${imgData}" style="width:100%; max-width:600px; border:1px solid #ccc;"/>
+    `;
 
-            resultContainer.innerHTML = `
-                <p style="margin: 10px; font-size: 16px;">✦ Hóa đơn đã tạo xong. Bạn có thể lưu ảnh về máy:</p>
-                <img src="${imgData}" style="width:100%; max-width:600px; border:1px solid #ccc;"/>
-                <br><br>
-                <button onclick="downloadImage()" style="padding: 10px 20px; font-size: 16px;">📥 Tải ảnh về máy</button>
-            `;
+    // Tạo nút tải cố định trên đầu
+    const fixedButton = document.createElement("button");
+    fixedButton.textContent = "📥 Tải ảnh về máy";
+    fixedButton.onclick = downloadImage;
+    fixedButton.style.position = "fixed";
+    fixedButton.style.top = "10px";
+    fixedButton.style.left = "50%";
+    fixedButton.style.transform = "translateX(-50%)";
+    fixedButton.style.zIndex = "9999";
+    fixedButton.style.padding = "12px 24px";
+    fixedButton.style.fontSize = "16px";
+    fixedButton.style.background = "#4CAF50";
+    fixedButton.style.color = "#fff";
+    fixedButton.style.border = "none";
+    fixedButton.style.borderRadius = "8px";
+    fixedButton.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
 
-            // Chèn lên đầu body
-            document.body.insertBefore(resultContainer, document.body.firstChild);
+    // Thêm cả hai phần vào body
+    document.body.appendChild(fixedButton);
+    document.body.appendChild(imageContainer);
 
-            // Tự động tải ảnh (nếu được)
-            downloadImage();
-        });
+    // Cuộn lên đầu trang
+    window.scrollTo(0, 0);
+
+    // Tự động tải (nếu muốn)
+    downloadImage();
+});
+
+		
+		
+		
+		
     }, 1000);
 Đơn</title>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
