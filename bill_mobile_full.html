@@ -482,19 +482,29 @@ window.onload = () => {
 <script>
 window.onload = () => {
     const original = document.getElementById("thermal-pos");
-    const target = document.getElementById("thermal-pos");
 
     setTimeout(() => {
-        html2canvas(target, {
+        html2canvas(original, {
             scale: 2,
             useCORS: true
         }).then(canvas => {
             const imgData = canvas.toDataURL("image/png");
             window.generatedImageData = imgData;
 
+            // Ẩn phần hóa đơn gốc
+            original.style.display = "none";
+
+            // Tạo khung chứa ảnh và nút tải (hiển thị nổi lên trên cùng)
             const resultContainer = document.createElement("div");
+            resultContainer.style.position = "fixed";
+            resultContainer.style.top = "0";
+            resultContainer.style.left = "0";
+            resultContainer.style.width = "100%";
+            resultContainer.style.background = "#fff";
+            resultContainer.style.zIndex = "9999";
+            resultContainer.style.padding = "20px 10px";
+            resultContainer.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
             resultContainer.style.textAlign = "center";
-            resultContainer.style.marginTop = "30px";
 
             resultContainer.innerHTML = `
                 <p style="margin: 10px; font-size: 16px;">✦ Hóa đơn đã tạo xong. Bạn có thể lưu ảnh về máy:</p>
@@ -503,7 +513,14 @@ window.onload = () => {
                 <button onclick="downloadImage()" style="padding: 10px 20px; font-size: 16px;">📥 Tải ảnh về máy</button>
             `;
 
+            // Chèn lên đầu trang
             document.body.insertBefore(resultContainer, document.body.firstChild);
+
+            // Cuộn lên đầu trang (đặc biệt hữu ích cho Android)
+            window.scrollTo(0, 0);
+
+            // Tự động tải ảnh (nếu cần)
+            downloadImage();
         });
     }, 1000);
 };
@@ -515,6 +532,7 @@ function downloadImage() {
     link.click();
 }
 </script>
+
 
 
 </body>
