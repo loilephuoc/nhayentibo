@@ -11,7 +11,7 @@
     }
 
         #thermal-pos {
-            padding-bottom: 150px;
+            padding-bottom: 100px;
             box-shadow: 0 0 5px #EEE;
             margin: 0 auto;
             max-width: 72mm;
@@ -245,7 +245,7 @@ window.onload = () => {
                 <button onclick="downloadImage()" style="padding: 10px 20px; font-size: 16px;">📥 Tải ảnh về máy</button>
             `;
 
-            document.body.appendChild(resultContainer);
+            document.body.insertBefore(resultContainer, document.body.firstChild);
         });
     }, 1000);
 };
