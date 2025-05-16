@@ -526,8 +526,21 @@ window.onload = () => {
 };
 
 function downloadImage() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderId = urlParams.get("id") || "unknown";
+    let customerName = urlParams.get("hoten_kh") || "khach";
+
+    // Làm sạch tên khách: bỏ dấu, thay khoảng trắng bằng _, bỏ ký tự đặc biệt
+    customerName = customerName
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")  // loại dấu tiếng Việt
+        .replace(/\s+/g, "_")             // thay khoảng trắng thành _
+        .replace(/[^a-zA-Z0-9_]/g, "");   // bỏ ký tự đặc biệt
+
+    const fileName = `hoa_don_${orderId}_${customerName}.png`;
+
     const link = document.createElement("a");
-    link.download = "hoa_don.png";
+    link.download = fileName;
     link.href = window.generatedImageData;
     link.click();
 }
